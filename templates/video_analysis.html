@@ -292,10 +292,9 @@
     </div>
 
     <h1>Video Analysis per Frame</h1>
-    <div id="videoContainer" style="padding-bottom: 45px;" class="videoContainer">
+    <div id="videoContainer" style="display: none; padding-bottom: 45px;" class="videoContainer">
         <img src="{{url_for('analyse_video')}}" width="1500" height="800">
     </div>
-
     <footer class="fixed-bottom d-flex justify-content-center" id="footer">
         <a href="https://sports.uqac.ca/" target="_blank" style="color: #fff;">
             Made by Team Smart System for Sport 2024. Copyright © - UQACsss
@@ -332,5 +331,31 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
+
+        <script>
+    function submitForm(event) {
+        event.preventDefault();  // Empêche la soumission normale du formulaire
+        const form = document.getElementById('analysisForm');
+        const formData = new FormData(form);
+
+        fetch('/analyse_video', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                const videoContainer = document.getElementById('videoContainer');
+                videoContainer.style.display = 'block'; // Afficher la vidéo
+                videoContainer.innerHTML = '<img src="/video_feed" width="1500" height="800">';
+            } else {
+                console.error('Failed to load video feed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
 
 </body>
