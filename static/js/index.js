@@ -12,6 +12,28 @@ const addStylesToHeaderList = () => {
   headerListVisible = true; // Met à jour la variable de statut pour indiquer que les styles sont actuellement appliqués
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    let images = [
+        "../static/imgs/peoplesoccer.jpg",
+        "../static/imgs/trainer1.jpg",
+        "../static/imgs/trainer2.jpg"
+    ];
+
+    let banner = document.querySelector(".banner");
+    let index = 0;
+
+    function changeImage() {
+        banner.style.backgroundImage = `url('${images[index]}')`;
+        index = (index + 1) % images.length;
+    }
+
+    // Définir l'image de départ
+    banner.style.backgroundImage = `url('${images[0]}')`;
+
+    // Changer l'image toutes les 3 secondes
+    setInterval(changeImage, 3000);
+});
+
 
 const removeStylesFromHeaderList = () => {
   const headerList = document.querySelector('.header-list');
@@ -43,4 +65,5 @@ close.addEventListener("click", removeStylesFromHeaderList); // Retire les style
 //   let header = document.querySelector('header'); // Sélectionnez l'élément header
 //   header.style.marginBottom = '15px'; // Modifiez la marge inférieure de l'élément header
 // }
+
 
