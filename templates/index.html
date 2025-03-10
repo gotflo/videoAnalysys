@@ -2,138 +2,249 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-  <link rel="stylesheet" href="../static/css/index.css" />
-  <link rel="stylesheet" href="../static/css/information.css">
-  <link rel="icon" href="../static/imgs/uqac.png">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../static/css/index.css"/>
+    <link rel="stylesheet" href="../static/css/information.css">
+    <link rel="icon" href="../static/imgs/uqac.png">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <title>Perfermance Predicter</title>
+    <title>Perfermance Predicter</title>
+
+    <!-- Animate on Scroll Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
 </head>
 
 <body>
-  <header>
-    <a href="{{url_for('index')}}" class="logo-container">
-      <h1>UQAC</h1>
-      <span>SSS</span>
-    </a>
+<header>
+    <a href="{{ url_for('index') }}" class="logo-container">
+        <h1>UQAC</h1>
+        <span>SSS</span></a>
     <div class="menu">
-      <svg xmlns="http://www.w3.org/2000/svg" id="svg" width="40" height="40" fill="currentColor" class="bi bi-list"
-        viewBox="0 0 16 16" style="border: 1px solid black;border-radius: 5px;">
-        <path fill-rule="evenodd"
-          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-      </svg>
-      <ul class="header-list">
-        <li><a href="{{url_for('index')}}" class="active">Home</a></li>
-        <li><a href="/index#information_container">Information </a></li>
-        <li class="model"><a href="{{url_for('Video_Analysis')}}">Models</a>
-          <ul class="drop-down">
-            <li><a href="{{url_for('Video_Analysis')}}">Video Analysis</a></li>
-            <li><a href="/index#details_video">Model Details</a></li>
-          </ul>
-        </li>
-        <span></span>
-      </ul>
+        <svg xmlns="http://www.w3.org/2000/svg" id="svg" width="40" height="40" fill="currentColor" class="bi bi-list"
+             viewBox="0 0 16 16" style="border: 1px solid black;border-radius: 5px;">
+            <path fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        <ul class="header-list">
+            <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+            <li><a href="/index#information_container">Information </a></li>
+            <li class="model"><a href="{{ url_for('Video_Analysis') }}">Models</a>
+                <ul class="drop-down">
+                    <li><a href="{{ url_for('Video_Analysis') }}">Video Analysis</a></li>
+                    <li><a href="/index#details_video">Model Details</a></li>
+                </ul>
+            </li>
+            <span></span>
+        </ul>
     </div>
 
 
     <div class="login">
-      <a href="{{url_for('login')}}" class="user"><i class="bi bi-person-fill"></i>{{out}}</a>
+        <a href="{{ url_for('login') }}" class="user"><i class="bi bi-person-fill"></i>{{ out }}</a>
     </div>
 
-  </header>
-  
-  <main class="main-container">
-    <section class="hero">
-      <div class="hero-title">
-        <h3 class="text-with-background">DATA CAN BE PREDICTED</h3>
-          <p class="description" style="font-size: 19px;">
-            Welcome to the UQAC Smart System for Sport Platform! <br>
-            Our UQACsss platform is a comprehensive solution dedicated to optimizing sports performance,
-            specifically focused on football. It offers a set of innovative Data Science solutions designed
-            to meet the needs of teams, coaches, and sports analysts.
-          </p>
-          <div class="solution_button">
-            <div class="model_one">
-              <button>
-                <a href="{{url_for('Video_Analysis')}}">Video Analysis</a>
-              </button>
+</header>
+
+
+<main>
+    <div class="banner">
+    <div class="banner-content">
+        <h1>Start analysing your games today</h1>
+        <p>The video analysis software that helps coaches, analysts and players.</p>
+        <a href="{{ url_for('Video_Analysis') }}" class="btn">Get Started</a>
+    </div>
+</div>
+
+
+    <section class="features">
+        <div class="container">
+            <div class="card" data-aos="fade-up">
+                <div class="card-number">1</div>
+                <h2>Football players, referee, and ball detection</h2>
+                <p>Detects players, referees, and the ball in real time using advanced AI models.</p>
             </div>
-          </div>
-
-      </div>
-      <div class="grid-container">
-        <div class="first-and-third-row">
-          <img src="../static/imgs/ronaldo.gif" class="image" alt="ronaldo" />
-          <img src="../static/imgs/zidane.gif" class="image" alt="zidane" />
-          <img src="../static/imgs/ziyech.gif" class="image" alt="ziyech" />
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-number">2</div>
+                <h2>Players team prediction</h2>
+                <p>Automatically identifies the teams of players based on uniform colors and other attributes.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-number">3</div>
+                <h2>Estimation of players and ball positions</h2>
+                <p>Maps player and ball positions onto a tactical field for strategic analysis.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-number">4</div>
+                <h2>Ball Tracking</h2>
+                <p>Follows the movement of the ball to provide key insights into the game.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="400">
+                <div class="card-number">5</div>
+                <h2>Distance covered calculation</h2>
+                <p>Computes the total distance each player has covered during the match.</p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="500">
+                <div class="card-number">6</div>
+                <h2>Velocity calculation</h2>
+                <p>Measures the speed of each player throughout the game for performance evaluation.</p>
+            </div>
         </div>
-        <div class="second-row">
-          <img src="../static/imgs/messi.gif" class="image" alt="messi" />
-          <img src="../static/imgs/women.gif" class="image" alt="women" />
-          <img src="../static/imgs/stat.gif" class="image" alt="stat" />
-        </div>
-        <div class="first-and-third-row">
-          <img src="../static/imgs/enn.gif" class="image" alt="zidane" />
-          <img src="../static/imgs/hakimi.gif" class="image" alt="ronaldo" />
-          <img src="../static/imgs/robot.gif" class="image" alt="messi" />
-        </div>
-      </div>
     </section>
-  </main>
 
 
-  <div class="details_video_analysis" id="details_video">
-    <h1>Video Analysis Model details</h1>
-    <div class="main_fonctionalities">
-      <h2>Main Application Functionalities</h2>
-      <ul>
-        <li>1. Football players, referee, and ball detection.</li>
-        <li>2. Players team prediction.</li>
-        <li>3. Estimation of players and ball positions on a tactical map.</li>
-        <li>4. Ball Tracking.</li>
-        <li>5. Distance covered calculation for each player.</li>
-        <li>6. Velocity calculation for each player.</li>
-      </ul>
+    <section class="video-analysis">
+        <div class="container">
+            <!-- Mockup Laptop with Video -->
+            <div class="video-wrapper">
+                <video src="/../static/imgs/oncevidio.mp4" autoplay loop muted playsinline></video>
+            </div>
+
+            <!-- Description Section -->
+            <div class="description">
+                <h2>Advanced Video Analysis</h2>
+                <p>
+                    Our AI-powered application analyzes football matches in real-time, tracking players and the ball to
+                    provide accurate statistics and tactical visualizations.
+                </p>
+                <ul class="features-list">
+                    <li><span>🎯</span> Detection of players, referees, and the ball</li>
+                    <li><span>🏃‍♂️</span> Real-time ball tracking</li>
+                    <li><span>📊</span> Detailed statistics for each player</li>
+                    <li><span>📍</span> Automatic tactical positioning</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="features-section">
+        <div class="container">
+            <!-- Football Exclusive -->
+            <div class="feature">
+                <div class="icon">
+                    <span>⚽</span>
+                </div>
+                <h3>Football Exclusive</h3>
+                <p>UQACsss is designed solely for football match analysis.</p>
+            </div>
+
+            <!-- Separator -->
+            <div class="separator"></div>
+
+            <!-- Online Platform -->
+            <div class="feature">
+                <div class="icon">
+                    <span>☁️</span>
+                </div>
+                <h3>100% Online Platform</h3>
+                <p>Access UQACsss from any device, no installation required.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="pricing-section">
+        <div class="container">
+            <!-- SECTION TITLE -->
+            <h2 class="pricing-title">Choose Your Plan</h2>
+
+            <div class="pricing-wrapper">
+                <!-- Free Plan -->
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <p class="price">€0</p>
+                    <button>GET STARTED</button>
+                    <ul>
+                        <li>✔ Basic match analysis</li>
+                        <li>✔ Limited storage</li>
+                        <li>✔ Access on one device</li>
+                    </ul>
+                </div>
+
+                <!-- Basic Plan -->
+                <div class="pricing-card popular">
+                    <span class="tag">Most Popular</span>
+                    <h3>Basic</h3>
+                    <p class="price">€14</p>
+                    <button>BUY NOW</button>
+                    <ul>
+                        <li>✔ Advanced match analysis</li>
+                        <li>✔ Cloud storage</li>
+                        <li>✔ Access on multiple devices</li>
+                    </ul>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card">
+                    <h3>Pro</h3>
+                    <p class="price">€38</p>
+                    <button>BUY NOW</button>
+                    <ul>
+                        <li>✔ All Basic features</li>
+                        <li>✔ AI-powered tracking</li>
+                        <li>✔ Export & sharing options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Logo -->
+        <div class="footer-logo">
+            <a href="{{ url_for('index') }}" class="logo-container">
+                <h1>UQAC</h1>
+                <span>SSS</span>
+            </a>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="footer-links">
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Download</a></li>
+            <li><a href="#">Digital Kit</a></li>
+        </ul>
+
+        <!-- Social Media Icons -->
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
     </div>
-    <div class="how_to_use">
-      <h2>How to use?</h2>
-      <p><span class="highlight">When you start the video analysis solution, it is required to set up a match video. 
-        Additionally, we recommend configuring the settings and hyperparameters.</span></p>
-      <ul>
-        <li>a. Upload a video to analyze, using the sidebar menu "Browse files" button.</li>
-        <li>b. Enter the team names that correspond to the uploaded video in the text fields in the sidebar menu.</li>
-        <li>c. Access the "Team colors" tab on the main page.</li>
-        <li>d. Select players and goalkeepers both teams color.</li>
-        <li>e. Follow the instructions on the page to pick each team’s colors.</li>
-        <li>f. Adjust hyperparameters, and select the annotation options to confohure the out frame.</li>
-        <li>g. Default hyperparameters are recommended</li>
-        <li>h. Run Analyse Video!</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container_image" id="information_container">
-    <h1> Video Analysis Architecture</h1>
-    <img src="../static/imgs/Conception_Smart_System_for_Sport.png" alt=""
-      style="width: 1400px; height: 800px; margin-left: 50px;">
-  </div>
-
-  <footer class="fixed-bottom d-flex justify-content-center" id="footer">
-    <a href="https://sports.uqac.ca/" target="_blank" style="color: #fff;">
-      Made by Team Smart System for Sport 2024. Copyright © - UQACsss
+    <a href="https://sports.uqac.ca/" target="_blank" class="footer-copyright">
+        Made by Team Smart System for Sport 2024. Copyright © - UQACsss
     </a>
-  </footer>
 
-  <script src="../static/js/index.js"></script>
+</footer>
+
+
+<script src="../static/js/index.js"></script>
+<!-- Script AOS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000, // Durée de l'animation en ms
+        once: true, // Animation unique (ne se rejoue pas au scroll)
+    });
+</script>
+<!-- FontAwesome for icons -->
+<script src="https://kit.fontawesome.com/yourkitcode.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
