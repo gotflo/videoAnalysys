@@ -34,6 +34,21 @@ document.addEventListener("DOMContentLoaded", function () {
     setInterval(changeImage, 3000);
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    let cards = document.querySelectorAll(".pricing-card");
+
+    cards.forEach(card => {
+        card.addEventListener("click", function () {
+            // Supprime la classe "selected" de toutes les cartes
+            cards.forEach(c => c.classList.remove("selected"));
+
+            // Ajoute la classe "selected" à la carte cliquée
+            this.classList.add("selected");
+        });
+    });
+});
+
+
 
 const removeStylesFromHeaderList = () => {
   const headerList = document.querySelector('.header-list');

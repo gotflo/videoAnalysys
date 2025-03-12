@@ -167,6 +167,13 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
+.selected {
+    border: 3px solid #ff6200; /* Bordure orange pour montrer la sélection */
+    box-shadow: 0 0 20px rgba(255, 98, 0, 0.7); /* Glow orange */
+    transform: scale(1.05); /* Légère augmentation de taille */
+}
+
+
 /* STYLE DU NUMÉRO (CERCLE) */
 .card-number {
     position: absolute;
