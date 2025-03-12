@@ -647,3 +647,44 @@ input:checked + .slider:before {
     transform: translateY(0);
   }
 }
+
+
+/* Style du menu déroulant */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+  right: 0;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Affichage du menu au survol */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

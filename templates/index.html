@@ -24,35 +24,7 @@
 </head>
 
 <body>
-<header>
-    <a href="{{ url_for('index') }}" class="logo-container">
-        <h1>UQAC</h1>
-        <span>SSS</span></a>
-    <div class="menu">
-        <svg xmlns="http://www.w3.org/2000/svg" id="svg" width="40" height="40" fill="currentColor" class="bi bi-list"
-             viewBox="0 0 16 16" style="border: 1px solid black;border-radius: 5px;">
-            <path fill-rule="evenodd"
-                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-        </svg>
-        <ul class="header-list">
-            <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
-            <li><a href="/index#information_container">Information </a></li>
-            <li class="model"><a href="{{ url_for('Video_Analysis') }}">Models</a>
-                <ul class="drop-down">
-                    <li><a href="{{ url_for('Video_Analysis') }}">Video Analysis</a></li>
-                    <li><a href="/index#details_video">Model Details</a></li>
-                </ul>
-            </li>
-            <span></span>
-        </ul>
-    </div>
-
-
-    <div class="login">
-        <a href="{{ url_for('login') }}" class="user"><i class="bi bi-person-fill"></i>{{ out }}</a>
-    </div>
-
-</header>
+{% include 'header.html' %}  <!-- Inclusion du header -->
 
 
 <main>
@@ -200,37 +172,7 @@
 </main>
 
 
-<footer class="footer">
-    <div class="footer-container">
-        <!-- Logo -->
-        <div class="footer-logo">
-            <a href="{{ url_for('index') }}" class="logo-container">
-                <h1>UQAC</h1>
-                <span>SSS</span>
-            </a>
-        </div>
-
-        <!-- Navigation Links -->
-        <ul class="footer-links">
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Support</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Download</a></li>
-            <li><a href="#">Digital Kit</a></li>
-        </ul>
-
-        <!-- Social Media Icons -->
-        <div class="footer-socials">
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-        </div>
-    </div>
-    <a href="https://sports.uqac.ca/" target="_blank" class="footer-copyright">
-        Made by Team Smart System for Sport 2024. Copyright © - UQACsss
-    </a>
-
-</footer>
+{% include 'footer.html' %}  <!-- Inclusion du header -->
 
 
 <script src="../static/js/index.js"></script>

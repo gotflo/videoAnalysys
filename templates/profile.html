@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload an MP4 video</title>
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="stylesheet" href="../static/css/video_analysis.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- google-fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <link rel="icon" href="../static/imgs/uqac.png">
+        <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+     <link rel="stylesheet" href="../static/css/profile.css">
+
+</head>
+
+<body>
+{% include 'header.html' %}  <!-- Inclusion du header -->
+<div class="profile-container">
+    <h2>Mon Profil</h2>
+
+    <h1>Bienvenue, {{ user_data['First Name'] }} {{ user_data['Last Name'] }}</h1>
+
+<form method="POST">
+    <label for="first_name">Prénom:</label>
+    <input type="text" id="first_name" name="first_name" value="{{ user_data['First Name'] }}" required><br>
+
+    <label for="last_name">Nom:</label>
+    <input type="text" id="last_name" name="last_name" value="{{ user_data['Last Name'] }}" required><br>
+
+    <label for="gender">Genre: </label>
+    <select name="gender" id="gender">
+        <option value="feminine" {% if user_data['Gender'] == 'feminine' %}selected{% endif %}>Feminine</option>
+        <option value="male" {% if user_data['Gender'] == 'male' %}selected{% endif %}>Male</option>
+    </select><br>
+
+    <label for="age">Âge:</label>
+    <input type="number" id="age" name="age" value="{{ user_data['Age'] }}" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ user_data['Email'] }}" disabled><br>
+
+    <label for="status">Statut:</label>
+    <select name="status" id="status">
+        <option value="player" {% if user_data['Status'] == 'player' %}selected{% endif %}>Player</option>
+        <option value="coach" {% if user_data['Status'] == 'coach' %}selected{% endif %}>Coach</option>
+    </select><br>
+
+    <label for="password">Mot de passe:</label>
+    <input type="password" id="password" name="password" value="{{ user_data['Password'] }}" required><br>
+
+    <button type="submit">Mettre à jour</button>
+</form>
+    <a href="{{ url_for('login') }}" class="logout-btn">Se déconnecter</a>
+</div>
+{% include 'footer.html' %}  <!-- Inclusion du header -->
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();  // Empêche la soumission normale du formulaire
+            const form = document.getElementById('analysisForm');
+            const formData = new FormData(form);
+
+            fetch('/analyse_video', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        const videoContainer = document.getElementById('videoContainer');
+                        videoContainer.innerHTML = '<img src="/video_feed" width="1500" height="800">';
+                    } else {
+                        console.error('Failed to load video feed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+
+    <script src="../static/js/video_analysis.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+        <script>
+    function submitForm(event) {
+        event.preventDefault();  // Empêche la soumission normale du formulaire
+        const form = document.getElementById('analysisForm');
+        const formData = new FormData(form);
+
+        fetch('/analyse_video', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                const videoContainer = document.getElementById('videoContainer');
+                videoContainer.style.display = 'block'; // Afficher la vidéo
+                videoContainer.innerHTML = '<img src="/video_feed" width="1500" height="800">';
+            } else {
+                console.error('Failed to load video feed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</body>
+</html>
