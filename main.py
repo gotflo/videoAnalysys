@@ -1,6 +1,4 @@
-from flask import Flask
-from flask import render_template, Response
-from flask import request
+from flask import Flask, render_template, Response, request, redirect, url_for, session, flash
 import pandas as pd
 import os
 import numpy as np
@@ -18,13 +16,18 @@ import yaml  # Library for YAML data manipulation
 import time  # Library for time-related functions
 
 
-import matplotlib.pyplot as plt  # Module for plotting graphs in Python
+import matplotlib.pyplot as plt  # Module for plotting graphs in Python 
 import numpy as np  # Module for numerical computation in Python
 import pandas as pd  # Module for data manipulation and analysis in Python
 
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1000 * 1000
+# Clé secrète pour sécuriser les sessions
+SECRET_KEY='d290f1ee6c2ffafd2d334b918ea6c44e72e7e0521b23c1ad' 
+app.secret_key = 'SECRET_KEY'  # Change cette clé pour plus de sécurité
+
+
 
 #################################################
 # Deployment of third solution - Video Analysis #
@@ -573,7 +576,14 @@ global_data = {}
 
 @app.route('/video_analysis')
 def Video_Analysis():
-    return render_template('video_analysis.html', out=your_count_name())
+    if 'user' not in session:  # Vérifie si l'utilisateur est connecté
+        return redirect(url_for('login'))  # Redirige vers la page de connexion si l'utilisateur n'est pas authentifié
+
+    user_data = session['user']  # Récupère les informations de l'utilisateur depuis la session
+    user_name = f"{user_data['First Name']} {user_data['Last Name']}"  # Formate le nom complet
+
+    return render_template('video_analysis.html', user_name=user_name)
+
 
 @app.route('/analyse_video', methods=['POST'])
 def analyse_video():
@@ -642,7 +652,12 @@ def video_feed():
 #####################################################
 @app.route('/index')
 def index():
-    return render_template('index.html', out=your_count_name())
+    if 'user' in session:
+        full_name = session['user']['First Name'] + " " + session['user']['Last Name']
+    else:
+        full_name = ""
+
+    return render_template('index.html', out=full_name)
 
 @app.route("/")
 def login():
@@ -712,12 +727,17 @@ def test_login():
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row['Email'] == email and row['Password'] == password:
-                # writing into the file
-                user_name = {'First Name': [row['First Name']], 'Last Name': [row['Last Name']]}
-                df = pd.DataFrame.from_dict(user_name)
-                df.to_csv("./static/login/name.csv", index=False)
+                # Stocker les informations de l'utilisateur dans la session
+                session['user'] = {
+                    'First Name': row['First Name'],
+                    'Last Name': row['Last Name'],
+                    'Gender': row['Gender'],
+                    'Age': row['Age'],
+                    'Email': row['Email'],
+                    'Status': row['Status']
+                }
 
-                return render_template('index.html', out=your_count_name())
+                return redirect(url_for('index'))  # Rediriger vers la page d'accueil
 
     data = {
         "Email": email,
@@ -725,6 +745,7 @@ def test_login():
         "error_message": "Your email or Password is incorrect. Try Again!"
     }
     return render_template('login.html', out=data)
+
 
 
 @app.route("/reset_password_page")
@@ -809,5 +830,102 @@ def your_count_name():
             return name
         return ""
 
+
+def get_user_data():
+    # Vérifier si le fichier CSV existe
+    if os.path.isfile("./static/login/data.csv"):
+        # Lire le fichier CSV avec pandas
+        df = pd.read_csv("./static/login/data.csv")
+        
+        # Vérifier que les colonnes nécessaires existent dans le DataFrame
+        first_name = df['First Name'][0] if 'First Name' in df.columns else ''
+        last_name = df['Last Name'][0] if 'Last Name' in df.columns else ''
+        gender = df['Gender'][0] if 'Gender' in df.columns else ''
+        age = df['Age'][0] if 'Age' in df.columns else ''
+        email = df['Email'][0] if 'Email' in df.columns else ''
+        password = df['Password'][0] if 'Password' in df.columns else ''
+        status = df['Status'][0] if 'Status' in df.columns else ''
+        
+        # Retourner un dictionnaire avec toutes les informations
+        return {
+            'First Name': first_name,
+            'Last Name': last_name,
+            'Gender': gender,
+            'Age': age,
+            'Email': email,
+            'Password': password,
+            'Status': status
+        }
+    return {}  # Si le fichier n'existe pas, retourner un dictionnaire vide
+
+
+
+
+CSV_FILE = './static/login/data.csv'  # Remplace par le chemin de ton fichier CSV
+
+def read_users():
+    """Lit le fichier CSV et retourne une liste de dictionnaires avec les utilisateurs."""
+    users = []
+    with open(CSV_FILE, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            users.append(row)
+    return users
+
+def write_users(users):
+    """Écrit la liste des utilisateurs mise à jour dans le fichier CSV."""
+    with open(CSV_FILE, mode='w', newline='', encoding='utf-8') as file:
+        fieldnames = ['First Name', 'Last Name', 'Gender', 'Age', 'Email', 'Status', 'Password']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(users)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if 'user' not in session:  
+        return redirect(url_for('login'))
+
+    users = read_users()
+    user_email = session['user']['Email']  # Récupérer l'email de l'utilisateur connecté
+    user_data = next((u for u in users if u['Email'] == user_email), None)
+
+    if not user_data:
+        flash("Utilisateur introuvable.", "danger")
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # Mise à jour des informations utilisateur
+        user_data['First Name'] = request.form['first_name']
+        user_data['Last Name'] = request.form['last_name']
+        user_data['Gender'] = request.form['gender']
+        user_data['Age'] = request.form['age']
+        user_data['Status'] = request.form['status']
+        user_data['Password'] = request.form['password']  # ⚠️ Idéalement, hache ce mot de passe
+
+        # Mettre à jour le fichier CSV
+        for i, u in enumerate(users):
+            if u['Email'] == user_email:
+                users[i] = user_data  # Modifier l'utilisateur dans la liste
+
+        write_users(users)  # Sauvegarde dans le fichier CSV
+        session['user'] = user_data  # Mettre à jour la session avec les nouvelles infos
+
+        flash('Profil mis à jour avec succès !', 'success')
+        return redirect(url_for('profile'))  # Recharger la page
+
+    return render_template('profile.html', user_data=user_data)
+
+
+
+
+    
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)  # Supprime l'utilisateur de la session
+    return redirect(url_for('login'))  # Redirige vers la page de connexion
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True)  # Set debug mode to True
+    app.run(debug=True)

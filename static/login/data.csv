@@ -1,3 +1,4 @@
-First Name,Last Name,Gender,Age,Email,Password,Status
-Mohamed,CISSE,,24,C79024206@gmail.com,MOH,player
-got,flo,feminine,20,gotflo@gmail.com,123456789,coach
+First Name,Last Name,Gender,Age,Email,Status,Password
+Mohamed,CISSE,male,24,C79024206@gmail.com,player,MOH
+got,flo,feminine,20,gotflo@gmail.com,coach,123456789
+souley,bah,feminine,22,soul@gmail.com,player,12345
