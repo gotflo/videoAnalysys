@@ -580,7 +580,9 @@ def Video_Analysis():
         return redirect(url_for('login'))  # Redirige vers la page de connexion si l'utilisateur n'est pas authentifié
 
     user_data = session['user']  # Récupère les informations de l'utilisateur depuis la session
-    user_name = f"{user_data['First Name']} {user_data['Last Name']}"  # Formate le nom complet
+    # user_name = f"{user_data['First Name']} {user_data['Last Name']}"  # Formate le nom complet
+    user_name = f"{user_data['First Name'].split()[0]} {user_data['Last Name'].split()[0]}"
+
 
     return render_template('video_analysis.html', user_name=user_name)
 
@@ -653,11 +655,15 @@ def video_feed():
 @app.route('/index')
 def index():
     if 'user' in session:
-        full_name = session['user']['First Name'] + " " + session['user']['Last Name']
+        user_data = session['user']  # Récupère les informations de l'utilisateur
+        first_name = user_data['First Name'].split()[0] if 'First Name' in user_data else ''
+        last_name = user_data['Last Name'].split()[0] if 'Last Name' in user_data else ''
+        user_name = f"{first_name} {last_name}"
     else:
-        full_name = ""
+        user_name = ""
 
-    return render_template('index.html', out=full_name)
+    return render_template('index.html', user_name=user_name)
+
 
 @app.route("/")
 def login():
@@ -892,6 +898,11 @@ def profile():
     if not user_data:
         flash("Utilisateur introuvable.", "danger")
         return redirect(url_for('login'))
+    
+      # Extraire uniquement le premier mot du prénom et du nom
+    first_name = user_data['First Name'].split()[0] if 'First Name' in user_data else ''
+    last_name = user_data['Last Name'].split()[0] if 'Last Name' in user_data else ''
+    user_name = f"{first_name} {last_name}"
 
     if request.method == 'POST':
         # Mise à jour des informations utilisateur
@@ -900,7 +911,7 @@ def profile():
         user_data['Gender'] = request.form['gender']
         user_data['Age'] = request.form['age']
         user_data['Status'] = request.form['status']
-        user_data['Password'] = request.form['password']  # ⚠️ Idéalement, hache ce mot de passe
+        user_data['Password'] = request.form['password']  
 
         # Mettre à jour le fichier CSV
         for i, u in enumerate(users):
